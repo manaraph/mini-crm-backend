@@ -35,6 +35,8 @@ const signIn = (req, res) => {
       }
 
       jwt.sign({ email }, process.env.SECRET, {expiresIn: '7d'}, (err, token) => {
+        console.log(token);
+        
         return res.status(200).json({
         message: 'success',
         data: {
