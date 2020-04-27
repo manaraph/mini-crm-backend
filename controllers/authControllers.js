@@ -5,6 +5,8 @@ const sql = require('../config/dbConfig');
 
 dotenv.config();
 
+const hashSecret = process.env.SECRET || 12345678;
+
 const signIn = (req, res) => {
   const { email, password } = req.body;
 
@@ -34,7 +36,7 @@ const signIn = (req, res) => {
         return res.status(400).json({message: 'The credentials you provided is incorrect'}) 
       }
 
-      jwt.sign({ email }, process.env.SECRET, {expiresIn: '7d'}, (err, token) => {
+      jwt.sign({ email }, hashSecret, {expiresIn: '7d'}, (err, token) => {
         console.log(token);
         
         return res.status(200).json({
@@ -71,7 +73,7 @@ const createAdmin = (req, res, next) => {
         return res.json({ error: 'Error saving user to the database' });
       }
   
-      jwt.sign({ email }, process.env.SECRET, {expiresIn: '7d'}, (err, token) => {
+      jwt.sign({ email }, hashSecret, {expiresIn: '7d'}, (err, token) => {
         return res.status(201).json({
           message: 'success',
           data: {
