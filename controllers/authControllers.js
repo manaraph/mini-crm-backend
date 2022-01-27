@@ -22,8 +22,7 @@ const signIn = (req, res) => {
   //If email is correct then run query
   sql.query("SELECT * FROM admin WHERE email = ? ", email, (err, result) => {
     if(err){ 
-      console.log(err);
-      return res.json({ error: 'There was an error signing in user.' });
+      return res.json({ error: 'There was an error signing in user.', err });
     }
     //If no row was found
     if(!result.length){
